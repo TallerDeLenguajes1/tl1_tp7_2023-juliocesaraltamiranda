@@ -1,62 +1,55 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using EspacioCalculadora;
+using EspacioEmpleado;
 
-var calculadora = new Calculadora();
-
-string menuString = "1-Sumar\n2-Restar\n3-Multiplicar\n4-Dividir\n5-Limpiar";
-int continuar = 1;
-string menuContinuar = "Desea realizar otra operacion: SI=1\tNO=0";
-int menuOpcion;
-double termino;
+DateTime fechaNacimiento;
+DateTime fechaIngreso;
+double montoTotal;
+int aniosCercaJubilacion = 65;
+int empleado;
 
 
-while(continuar == 1) {
+//+++++++++++++++++++++++ datos empleados 1 +++++++++++++++++++++++
+fechaNacimiento = new DateTime(1998, 08, 18);
+fechaIngreso = new DateTime(2021, 12, 21);
+var emp1 = new Empleado("julio", "altamiranda", fechaNacimiento, 'S', 'M', fechaIngreso, 65000, Cargo.Especialista);
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    Console.WriteLine(menuString);
-    Console.WriteLine("Ingrese una opcion");
+//+++++++++++++++++++++++ datos empleados 2 +++++++++++++++++++++++
+fechaNacimiento = new DateTime(1973, 07, 04);
+fechaIngreso = new DateTime(2002, 05, 11);
+var emp2 = new Empleado("enrique", "diaz", fechaNacimiento, 'S', 'M', fechaIngreso, 120000, Cargo.Auxiliar);
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    menuOpcion = int.TryParse(Console.ReadLine(), out menuOpcion) ? menuOpcion : 0;
+//+++++++++++++++++++++++ datos empleados 3 +++++++++++++++++++++++
+fechaNacimiento = new DateTime(1965, 01, 01);
+fechaIngreso = new DateTime(1987, 07, 09);
+var emp3 = new Empleado("lucia", "fernandez", fechaNacimiento, 'C', 'F', fechaIngreso, 200000, Cargo.Ingeniero);
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    switch(menuOpcion) {
 
-        case 1:
+montoTotal = emp1.Salario() + emp2.Salario() + emp3.Salario();
+Console.WriteLine("montoTotal: " + montoTotal);//Apartado 2d
 
-            Console.WriteLine("Ingrese un valor");
-            termino = double.TryParse(Console.ReadLine(), out termino) ? termino : 0;
-            calculadora.Sumar(termino);
+if(emp1.AniosParaJubilacion < aniosCercaJubilacion)
+{
+    aniosCercaJubilacion = emp1.AniosParaJubilacion;
+    emp1.CercaJubilacion = true;
+}
 
-        break;
-        case 2:
+if (emp2.AniosParaJubilacion < aniosCercaJubilacion)
+{
+    aniosCercaJubilacion = emp2.AniosParaJubilacion;
+    emp1.CercaJubilacion = false;
+    emp2.CercaJubilacion = true;
+}
 
-            Console.WriteLine("Ingrese un valor");
-            termino = double.TryParse(Console.ReadLine(), out termino) ? termino : 0;
-            calculadora.Restar(termino);
+if (emp3.AniosParaJubilacion < aniosCercaJubilacion)
+{
+    aniosCercaJubilacion = emp3.AniosParaJubilacion;
+    emp2.CercaJubilacion = false;
+    emp3.CercaJubilacion = true;
+}
 
-        break;
-        case 3:
-
-            Console.WriteLine("Ingrese un valor");
-            termino = double.TryParse(Console.ReadLine(), out termino) ? termino : 0;
-            calculadora.Multiplicar(termino);
-
-        break;
-        case 4:
-
-            Console.WriteLine("Ingrese un valor");
-            termino = double.TryParse(Console.ReadLine(), out termino) ? termino : 0;
-            calculadora.Dividir(termino);
-
-        break;
-        case 5:
-
-            calculadora.Limpiar();
-
-        break;
-        
-       
-    }
-
-    Console.WriteLine($"El resultado es: {calculadora.Resultado}");
-    Console.WriteLine(menuContinuar);
-    continuar = int.TryParse(Console.ReadLine(), out continuar) ? continuar : 0;    
-} 
+emp1.datos();
+emp2.datos();
+emp3.datos();
